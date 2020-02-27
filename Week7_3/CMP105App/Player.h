@@ -11,10 +11,16 @@ public:
 
 	void handleInput(float dt);
 	void update(float dt);
-	Bullet* getBullet() {
-		return bullet;
-	};
 
-private:
-	Bullet* bullet;
+	void drawBullets(sf::RenderWindow* window);
+
+	/*Bullet* getBullet() {
+		return bullet;
+	};*/
+
+protected:
+	//Bullet* bullet;
+	static const int MAX_BULL = 20;
+	Bullet* bullets[MAX_BULL];
+
 };

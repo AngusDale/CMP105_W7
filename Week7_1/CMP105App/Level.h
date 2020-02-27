@@ -25,6 +25,7 @@ private:
 	sf::RenderWindow* window;
 	Input* input;
 
+protected:
 	Player player;
 	Enemy enemy;
 };

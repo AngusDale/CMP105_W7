@@ -3,12 +3,18 @@
 Player::Player()
 {
 	setPosition(200, 200);
-	setSize(sf::Vector2f(100, 100));
+	setSize(sf::Vector2f(100, 100));	
+	
+	// initialises all the bullets
+	for (int i = 0; i < MAX_BULL; i++) {
+		bullets[i] = NULL;
+	}
 }
 
 
 Player::~Player()
 {
+	
 }
 
 void Player::handleInput(float dt)
@@ -22,12 +28,34 @@ void Player::handleInput(float dt)
 	}
 
 	if (input->isKeyDown(sf::Keyboard::Enter))
-	{
-		bullet->setPosition(getPosition() + sf::Vector2f(getSize().x / 2, getSize().y /2));
+	{	
+		input->setKeyUp(sf::Keyboard::Enter);
+		// find space for a bullet, creates a new one once space is found and then fires it, then breaks the for loop.
+		for (int i = 0; i < MAX_BULL; i++) {
+			if (bullets[i] == NULL) {
+				bullets[i] = new Bullet;
+				bullets[i]->setPosition(getPosition() + sf::Vector2f(getSize().x / 2, getSize().y / 2));
+				break;
+			}
+		}		
 	}
 }
 
 void Player::update(float dt) 
 {
-	bullet->update(dt);
+	// updates all the bullets positions
+	for (int i = 0; i < MAX_BULL; i++) {
+		if (bullets[i] != NULL) {
+			bullets[i]->update(dt);
+		}
+	}
+}
+
+void Player::drawBullets(sf::RenderWindow* window) {
+	// draws all the bullets
+	for (int i = 0; i < MAX_BULL; i++) {
+		if (bullets[i] != NULL) {
+			window->draw(*(bullets[i]));
+		}
+	}
 }
